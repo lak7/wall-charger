@@ -14,8 +14,6 @@ export default function Wall() {
         backgroundPosition: "center",
       }}
     >
-      <Navbar />
-
       {/* Hero Section */}
       <div className="flex justify-center items-center p-24 py-40 w-full px-8">
         <motion.div
@@ -53,6 +51,41 @@ export default function Wall() {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <span className="relative inline-block">Charge to your EV</span>
+            </motion.div>
+
+            {/* New Loader Section */}
+            <motion.div
+              className="mt-8 flex items-center gap-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <motion.span
+                className="text-gray-400 text-lg"
+                animate={{
+                  opacity: [0.5, 1, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                Waiting to Connect
+              </motion.span>
+
+              {/* Simple Circular Loader */}
+              <motion.div
+                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                animate={{
+                  rotate: 360,
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
             </motion.div>
           </motion.div>
         </motion.div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Wall from "./wall/page";
+import Wall from "./connect/page";
 
 export default function Home() {
   return (
