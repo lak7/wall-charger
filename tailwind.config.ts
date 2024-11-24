@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        "screen-h": "1024px",
+        "screen-w": "768px",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
