@@ -21,7 +21,7 @@ const WaveCharging = ({ percentage = 45 }) => {
   }, []);
 
   // Enhanced color function with more vibrant colors and transitions
-  const getCurrentColor = (percent) => {
+  const getCurrentColor = (percent: number) => {
     if (percent <= 33) {
       // Red to Blue (0-33%)
       const ratio = percent / 33;
