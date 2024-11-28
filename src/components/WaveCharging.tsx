@@ -71,7 +71,7 @@ const WaveCharging = ({ percentage = 45 }) => {
   return (
     <div className="flex items-center justify-center ">
       <div
-        className="relative w-48 h-48 transition-transform duration-300"
+        className="relative w-44 h-44 transition-transform duration-300"
         style={{ transform: hoverState ? "scale(1.05)" : "scale(1)" }}
         onMouseEnter={() => setHoverState(true)}
         onMouseLeave={() => setHoverState(false)}

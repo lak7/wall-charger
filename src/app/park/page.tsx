@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const Park = () => {
+  const [isParked, setIsParked] = useState(false);
   return (
     <div
       className="w-[768px] h-[1024px] overflow-hidden bg-[#2A2D32] font-sans pt-7"
@@ -30,6 +31,59 @@ const Park = () => {
             <span className="relative inline-block">Park your vehicle</span>
           </motion.div>
         </motion.div>
+      </div>
+      <div className="absolute w-full flex justify-center items-center">
+        <svg
+          width="336"
+          height="449"
+          viewBox="0 0 336 449"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <mask
+            id="mask0_11_320"
+            style={{ maskType: "alpha" }}
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="336"
+            height="449"
+          >
+            <motion.path
+              d="M3 0V448.5M333 448.5V0"
+              stroke="black"
+              strokeWidth="5"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 2.5, ease: "easeInOut" }}
+            />
+          </mask>
+          <g mask="url(#mask0_11_320)">
+            <rect
+              x="-109"
+              y="-115.5"
+              width="572"
+              height="733"
+              fill="url(#paint0_linear_11_320)"
+            />
+          </g>
+          <defs>
+            <linearGradient
+              id="paint0_linear_11_320"
+              x1="177"
+              y1="-115.5"
+              x2="177"
+              y2="617.5"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#1AFF4F" />
+              <stop offset="0.236666" stopColor="#29C20E" />
+              <stop offset="0.486666" stopColor="#20DFAF" />
+              <stop offset="0.781666" stopColor="#2D73FF" />
+              <stop offset="1" stopColor="#008BF5" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
       <div className="w-full flex justify-center items-center">
         <div className="flex-col justify-center items-center">
@@ -132,12 +186,24 @@ const Park = () => {
         </div>
       </div>
       <div className="flex w-full justify-center items-center">
-        <Image
-          src="/park-scooty.png"
-          alt="Charger pad"
-          width={350}
-          height={350}
-        />
+        <motion.div
+          initial={{ y: 450 }}
+          animate={isParked ? { y: -250 } : { y: [450, -250, -250] }}
+          transition={{
+            duration: 3,
+            times: [0, 0.66, 1],
+            repeat: isParked ? 0 : Infinity, // Stop repetition if isParked is true
+            repeatType: "loop", // Key change: use "loop" instead of "reverse"
+            ease: "easeInOut", // Smooth easing
+          }}
+        >
+          <Image
+            src="/park-scooty.png"
+            alt="Charger pad"
+            width={300}
+            height={300}
+          />
+        </motion.div>
       </div>
     </div>
   );

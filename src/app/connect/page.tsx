@@ -3,8 +3,32 @@
 import Navbar from "@/components/nav";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Wall() {
+  const router = useRouter();
+  const [connectionStatus, setConnectionStatus] = useState("waiting");
+
+  useEffect(() => {
+    const connectionTimer = setTimeout(() => {
+      setConnectionStatus("connected");
+
+      // Navigate to /park after an additional 2-3 seconds
+      const navigationTimer = setTimeout(() => {
+        router.push("/park");
+      }, 2500); // 2.5 seconds after connection
+
+      // Clean up both timers
+      return () => {
+        clearTimeout(connectionTimer);
+        clearTimeout(navigationTimer);
+      };
+    }, 5000); // 5 seconds initial wait
+
+    // Clean up the initial timer
+    return () => clearTimeout(connectionTimer);
+  }, [router]);
   return (
     <div
       className="relative w-[768px] h-[1024px] overflow-hidden bg-[#2A2D32] font-sans"
@@ -17,7 +41,7 @@ export default function Wall() {
       {/* Hero Section */}
       <div className="flex justify-center items-center p-24 py-40 w-full px-8">
         <motion.div
-          className="text-left flex-col gap-2  mb-24 relative"
+          className="text-left flex-col gap-2 mb-24 relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -53,39 +77,52 @@ export default function Wall() {
               <span className="relative inline-block">Charge to your EV</span>
             </motion.div>
 
-            {/* New Loader Section */}
+            {/* Connection Status Section */}
             <motion.div
               className="mt-8 flex items-center gap-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
-              <motion.span
-                className="text-gray-400 text-lg"
-                animate={{
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                Waiting to Connect
-              </motion.span>
+              {connectionStatus === "waiting" ? (
+                <>
+                  <motion.span
+                    className="text-gray-400 text-lg"
+                    animate={{
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    Waiting to Connect
+                  </motion.span>
 
-              {/* Simple Circular Loader */}
-              <motion.div
-                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                animate={{
-                  rotate: 360,
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
+                  {/* Simple Circular Loader */}
+                  <motion.div
+                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    animate={{
+                      rotate: 360,
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                </>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-green-500 text-4xl font-bold tracking-wide"
+                >
+                  Connected
+                </motion.div>
+              )}
             </motion.div>
           </motion.div>
         </motion.div>
